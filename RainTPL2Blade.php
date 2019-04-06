@@ -1,12 +1,9 @@
 <?php
 
 /*
- *  RainTPL2Blade
- *  -------
- *  Realized by Federico Ulfo & maintained by the Rain Team
- *  Distributed under the MIT license http://www.opensource.org/licenses/mit-license.php
- *
- *  @version 2.7.2
+ * Copyright (c) 2011-2017 Federico Ulfo <rainelemental@gmail.com>
+ * Copyright (c) 2019 Puskás Zsolt <errotan@gmail.com>
+ * Licensed under the MIT license.
  */
 
 class RainTPL2Blade
