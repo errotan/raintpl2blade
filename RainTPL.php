@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  *  RainTPL
  *  -------
  *  Realized by Federico Ulfo & maintained by the Rain Team
@@ -169,7 +169,7 @@ class RainTPL{
 		try {
 			// compile the template if necessary and set the template filepath
 			$this->check_template( $tpl_name );
-		} catch (RainTpl_Exception $e) {
+		} catch (RainTPL_Exception $e) {
 			$output = $this->printDebug($e);
 			die($output);
 		}
@@ -275,7 +275,7 @@ class RainTPL{
                         
 			// if the template doesn't exist and is not an external source throw an error
 			if( self::$check_template_update && !file_exists( $this->tpl['tpl_filename'] ) && !preg_match('/http/', $tpl_name) ){
-				$e = new RainTpl_NotFoundException( 'Template '. $tpl_basename .' not found!' );
+				$e = new RainTPL_NotFoundException( 'Template '. $tpl_basename .' not found!' );
 				throw $e->setTemplateFile($this->tpl['tpl_filename']);
 			}
 
@@ -333,7 +333,7 @@ class RainTPL{
 			mkdir( $cache_dir, 0755, true );
 
 		if( !is_writable( $cache_dir ) )
-			throw new RainTpl_Exception ('Cache directory ' . $cache_dir . 'doesn\'t have write permission. Set write permission or set RAINTPL_CHECK_TEMPLATE_UPDATE to false. More details on https://feulf.github.io/raintpl');
+			throw new RainTPL_Exception ('Cache directory ' . $cache_dir . 'doesn\'t have write permission. Set write permission or set RAINTPL_CHECK_TEMPLATE_UPDATE to false. More details on https://feulf.github.io/raintpl');
 
 		//write compiled file
 		file_put_contents( $compiled_filename, $template_compiled );
@@ -616,7 +616,7 @@ class RainTPL{
 		}
 
 		if( $open_if > 0 ) {
-			$e = new RainTpl_SyntaxException('Error! You need to close an {if} tag in ' . $this->tpl['tpl_filename'] . ' template');
+			$e = new RainTPL_SyntaxException('Error! You need to close an {if} tag in ' . $this->tpl['tpl_filename'] . ' template');
 			throw $e->setTemplateFile($this->tpl['tpl_filename']);
 		}
 		return $compiled_code;
@@ -986,7 +986,7 @@ class RainTPL{
 				$line++;
 
 			// stop the execution of the script
-			$e = new RainTpl_SyntaxException('Unallowed syntax in ' . $this->tpl['tpl_filename'] . ' template');
+			$e = new RainTPL_SyntaxException('Unallowed syntax in ' . $this->tpl['tpl_filename'] . ' template');
 			throw $e->setTemplateFile($this->tpl['tpl_filename'])
 				->setTag($code)
 				->setTemplateLine($line);
@@ -997,10 +997,10 @@ class RainTPL{
 	/**
 	 * Prints debug info about exception or passes it further if debug is disabled.
 	 *
-	 * @param RainTpl_Exception $e
+	 * @param RainTPL_Exception $e
 	 * @return string
 	 */
-	protected function printDebug(RainTpl_Exception $e){
+	protected function printDebug(RainTPL_Exception $e){
 		if (!self::$debug) {
 			throw $e;
 		}
@@ -1009,7 +1009,7 @@ class RainTPL{
 			$e->getMessage(),
 			$e->getTemplateFile()
 		);
-		if ($e instanceof RainTpl_SyntaxException) {
+		if ($e instanceof RainTPL_SyntaxException) {
 			if (null != $e->getTemplateLine()) {
 				$output .= '<p>line: ' . $e->getTemplateLine() . '</p>';
 			}
@@ -1029,108 +1029,3 @@ class RainTPL{
 		return $output;
 	}
 }
-
-
-/**
- * Basic Rain tpl exception.
- */
-class RainTpl_Exception extends Exception{
-	/**
-	 * Path of template file with error.
-	 */
-	protected $templateFile = '';
-
-	/**
-	 * Returns path of template file with error.
-	 *
-	 * @return string
-	 */
-	public function getTemplateFile()
-	{
-		return $this->templateFile;
-	}
-
-	/**
-	 * Sets path of template file with error.
-	 *
-	 * @param string $templateFile
-	 * @return RainTpl_Exception
-	 */
-	public function setTemplateFile($templateFile)
-	{
-		$this->templateFile = (string) $templateFile;
-		return $this;
-	}
-}
-
-/**
- * Exception thrown when template file does not exists.
- */
-class RainTpl_NotFoundException extends RainTpl_Exception{
-}
-
-/**
- * Exception thrown when syntax error occurs.
- */
-class RainTpl_SyntaxException extends RainTpl_Exception{
-	/**
-	 * Line in template file where error has occured.
-	 *
-	 * @var int | null
-	 */
-	protected $templateLine = null;
-
-	/**
-	 * Tag which caused an error.
-	 *
-	 * @var string | null
-	 */
-	protected $tag = null;
-
-	/**
-	 * Returns line in template file where error has occured
-	 * or null if line is not defined.
-	 *
-	 * @return int | null
-	 */
-	public function getTemplateLine()
-	{
-		return $this->templateLine;
-	}
-
-	/**
-	 * Sets  line in template file where error has occured.
-	 *
-	 * @param int $templateLine
-	 * @return RainTpl_SyntaxException
-	 */
-	public function setTemplateLine($templateLine)
-	{
-		$this->templateLine = (int) $templateLine;
-		return $this;
-	}
-
-	/**
-	 * Returns tag which caused an error.
-	 *
-	 * @return string
-	 */
-	public function getTag()
-	{
-		return $this->tag;
-	}
-
-	/**
-	 * Sets tag which caused an error.
-	 *
-	 * @param string $tag
-	 * @return RainTpl_SyntaxException
-	 */
-	public function setTag($tag)
-	{
-		$this->tag = (string) $tag;
-		return $this;
-	}
-}
-
-// -- end

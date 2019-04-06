@@ -1,6 +1,4 @@
-  RainTPL
--------------
+RainTPL to Blade converter
+--------------------------
 
-The easy and fast template engine for PHP.   Rain.TPL makes application easier to create & enables designers/developers to work better together.
-
-https://feulf.github.io/raintpl
+Converts RainTPL template files to Blade files used in Laravel framework.
