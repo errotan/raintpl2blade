@@ -12,6 +12,7 @@ assignment {$number=10} and print {$number}
 
 {$variable|substr:0,7}
 {"hello world"|strtoupper}
+{'YOO'|strtolower}
 
 {$GLOBALS.global_variable}
 
@@ -34,6 +35,14 @@ Constant: {#E_ALL#}
 	<li class="color{$counter%2+1}">{$key}) - {$value.name|strtoupper} - {$value.color}</li>
 {/loop}
 </ul>
+
+<span>{if="$string==10"}Hola!{if="$string=='gg'"}Good game!{/if} {/if}</span>
+
+<h1>
+	{if="$powerLevel > 9000"}
+		It's over nine thousand!!!
+	{/if}
+</h1>
 
 {if="$number==10"}OK!{else}NO!{/if}
 {if="$number===ALL"}OK!{else}NO!{/if}

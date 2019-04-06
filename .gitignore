@@ -1,2 +1,2 @@
 /.idea
-/tests/test.blade.php
+/tests/*.blade.php
