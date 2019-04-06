@@ -1,5 +1,5 @@
-RainTPL to Blade converter
---------------------------
+RainTPL to Blade template converter
+-----------------------------------
 
 Converts RainTPL template files to Blade files used in Laravel framework.
 
