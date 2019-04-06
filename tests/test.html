@@ -1,0 +1,50 @@
+{$title}
+
+{noparse}{$variable}{/noparse}
+
+{ignore} stuff {/ignore}
+{* ignored *}
+
+assignment {$number=10} and print {$number}
+
+{$variable . $number}
+{$number + 20}
+
+{$variable|substr:0,7}
+{"hello world"|strtoupper}
+
+{$GLOBALS.global_variable}
+
+Constant: {#E_ALL#}
+
+<ul>
+{loop="week"}
+	<li>{$key} = {$value.id}</li>
+	{loop="value.items"}
+		<b>#{$counter}</b> <small>{$value}</small>
+	{/loop}
+
+	{break}
+	{continue}
+{/loop}
+</ul>
+
+<ul>
+{loop="user"}
+	<li class="color{$counter%2+1}">{$key}) - {$value.name|strtoupper} - {$value.color}</li>
+{/loop}
+</ul>
+
+{if="$number==10"}OK!{else}NO!{/if}
+{if="$number===ALL"}OK!{else}NO!{/if}
+
+{if="substr($variable,0,1)=='A'"}First character is A
+{elseif="substr($variable,0,1)==='B'"}First character is B
+{else}First character of variable is not A neither B
+{/if}
+
+{$number==10? 'OK!' : 'no'}
+
+{include="test"}
+
+{function="ucfirst(strtolower($title))"}
