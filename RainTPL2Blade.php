@@ -116,12 +116,15 @@ class RainTPL2Blade
 	 	foreach( $parsed_code as $html ){
 
 	 		//close ignore tag
-			if( !$comment_is_open && ( strpos( $html, '{/ignore}' ) !== FALSE || strpos( $html, '*}' ) !== FALSE ) )
+			if( !$comment_is_open && ( strpos( $html, '{/ignore}' ) !== FALSE || strpos( $html, '*}' ) !== FALSE ) ) {
+                $compiled_code .=   ' --}}';
 	 			$ignore_is_open = false;
+            }
 
 	 		//code between tag ignore id deleted
 	 		elseif( $ignore_is_open ){
-	 			//ignore the code
+                //ignored code
+			    $compiled_code .= $html;
 	 		}
 
 	 		//close no parse tag
@@ -133,8 +136,10 @@ class RainTPL2Blade
  				$compiled_code .= $html;
 
 	 		//ignore
-			elseif( strpos( $html, '{ignore}' ) !== FALSE || strpos( $html, '{*' ) !== FALSE )
-	 			$ignore_is_open = true;
+			elseif( strpos( $html, '{ignore}' ) !== FALSE || strpos( $html, '{*' ) !== FALSE ) {
+                $compiled_code .=   '{{-- ';
+                $ignore_is_open = true;
+            }
 
 	 		//noparse
 	 		elseif( strpos( $html, '{noparse}' ) !== FALSE )
